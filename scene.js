@@ -1,9 +1,9 @@
-function Scene(eyePosition, skyEmission, groundReflection, triangles) {
+function Scene(skyEmission, groundReflection, triangles) {
     skyEmission = clamp(skyEmission, 0, Infinity);
     groundReflection = mul(skyEmission, clamp(groundReflection, 0, 1));
     var emitters = filter(triangles, glows);
     return {
-        intersect: SpatialIndex(eyePosition, triangles).intersect,
+        intersect: SpatialIndex(triangles).intersect,
         sampleEmitter: function(random) {
             if (emitters.length === 0) return null;
             return sampleArray(self.emitters, random);
