@@ -68,9 +68,14 @@ function clip(x, lo, hi) {
 }
 
 var ZERO = Vector3(0);          // TODO rename to Origin?
-var ONE = Vector3(1);
 
-// Tests from Clojure port
+
+// Tests mostly from Clojure port
+
+/// ZERO
+//. 0,0,0
+/// Vector3(42)
+//. 42,42,42
 
 /// var dyn100 = sub([1, 2, 3], [0, 2, 3]);
 /// var dyn010 = sub([1, 2, 3], [1, 1, 3]);

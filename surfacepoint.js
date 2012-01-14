@@ -40,7 +40,7 @@ function SurfacePoint(triangle, position) {
         // Return the next direction and color vectors of a ray from
         // -inDirection bouncing off the surface, or null. (Monte carlo.)
         getNextDirection: function(random, inDirection) {
-            var reflectivityMean = dot(triangle.getReflectivity(), ONE) / 3;
+            var reflectivityMean = dot(triangle.getReflectivity(), ONE_THIRD);
 
             // Russian roulette for reflectance magnitude
             if (reflectivityMean <= random())
@@ -70,3 +70,5 @@ function SurfacePoint(triangle, position) {
         },
     };
 }
+
+var ONE_THIRD = Vector3(1/3);
