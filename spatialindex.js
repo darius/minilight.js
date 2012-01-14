@@ -8,7 +8,7 @@ function SpatialIndex(things) {
             // (In the full version this code will go into the
             // octree-leaf code.)
             var nearestDistance = Infinity;
-            var hitThing       = null;
+            var hitThing        = null;
             var hitPosition     = ZERO;
             for (var i = 0; i < things.length; ++i) {
                 var thing = things[i];
