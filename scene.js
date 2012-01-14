@@ -1,5 +1,5 @@
 function Scene(eyePosition, skyEmission, groundReflection, triangles) {
-    skyEmission = clamp(skyEmission, 0, INFINITY);
+    skyEmission = clamp(skyEmission, 0, Infinity);
     groundReflection = mul(skyEmission, clamp(groundReflection, 0, 1));
     var emitters = filter(triangles, glows);
     return {

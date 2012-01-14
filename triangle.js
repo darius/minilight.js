@@ -6,7 +6,7 @@ var EPSILON = 1/1048576;
 
 function Triangle(v0, v1, v2, reflectivity, emissivity) {
     reflectivity = clamp(reflectivity, 0, 1);
-    emissivity = clamp(emissivity, 0, INFINITY);
+    emissivity = clamp(emissivity, 0, Infinity);
     var edge0 = sub(v1, v0);
     var edge1 = sub(v2, v1);
     var edge2 = sub(v2, v0);

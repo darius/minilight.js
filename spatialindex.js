@@ -7,7 +7,7 @@ function SpatialIndex(things) {
         intersect: function(rayOrigin, rayDirection, lastHit) {
             // (In the full version this code will go into the
             // octree-leaf code.)
-            var nearestDistance = INFINITY;
+            var nearestDistance = Infinity;
             var hitThing       = null;
             var hitPosition     = ZERO;
             for (var i = 0; i < things.length; ++i) {

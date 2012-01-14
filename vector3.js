@@ -69,7 +69,6 @@ function clip(x, lo, hi) {
 
 var ZERO = Vector3(0);          // TODO rename to Origin?
 var ONE = Vector3(1);
-var INFINITY = 1/0;
 
 // Tests from Clojure port
 
