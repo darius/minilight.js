@@ -76,6 +76,8 @@ var ZERO = Vector3(0);          // TODO rename to Origin?
 //. 0,0,0
 /// Vector3(42)
 //. 42,42,42
+/// Vector3(1,4,9)
+//. 1,4,9
 
 /// var dyn100 = sub([1, 2, 3], [0, 2, 3]);
 /// var dyn010 = sub([1, 2, 3], [1, 1, 3]);
