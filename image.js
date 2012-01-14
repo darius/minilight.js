@@ -1,7 +1,7 @@
 var PPM_ID = 'P6';
 var MINILIGHT_URI = 'http://www.hxa7241.org/minilight/';
 var DISPLAY_LUMINANCE_MAX = 200;
-var RGB_LUMINANCE = Vector3f(0.2126, 0.7152, 0.0722);
+var RGB_LUMINANCE = Vector3(0.2126, 0.7152, 0.0722);
 var GAMMA_ENCODE = 0.45;
 
 function Image(width, height) {
