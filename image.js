@@ -32,18 +32,21 @@ function Image(width, height) {
                 pixels[index+2] += radiance[2];
             }
         },
-        write: function(out, iteration) {
+        save: function(iteration) {
             var divider = 1 / (1 + Math.max(iteration, 0));
             var tonemapScaling = calculateToneMapping(pixels, divider);
-            out(PPM_ID);
-            out('\n# ' + MINILIGHT_URI + '\n\n');
-            out('' + width + ' ' + height + '\n255\n');
+            var out = '';
+            out += PPM_ID;
+            out += '\n# ' + MINILIGHT_URI + '\n\n';
+            out += '' + width + ' ' + height + '\n255\n';
             for (var i = 0; i < pixels.length; ++i) {
                 var channel = pixels[i];
                 var mapped = channel * divider * tonemapScaling;
                 var gammaed = Math.pow(Math.max(mapped, 0), GAMMA_ENCODE);
-                out(String.fromCharCode(Math.min(Math.floor((gammaed * 255) + 0.5), 255)));
+                out += String.fromCharCode(
+                    Math.min(Math.floor((gammaed * 255) + 0.5), 255));
             }
+            return out;
         },
     };
 }
