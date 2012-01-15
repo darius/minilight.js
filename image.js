@@ -14,7 +14,7 @@ function Image(width, height) {
         var sum_of_logs = 0;
         for (var i = 0; i < npixels; ++i) {
             var pixel = Vector3(pixels[3*i], pixels[3*i+1], pixels[3*i+2]);
-            var y = scale(divider, dot(Vector3(pixel, RGB_LUMINANCE)));
+            var y = scale(divider, dot(pixel, RGB_LUMINANCE));
             sum_of_logs += log10(Math.max(y, 1e-4));
         }
         var log_mean_luminance = Math.pow(10, sum_of_logs / npixels);
