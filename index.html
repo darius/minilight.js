@@ -1,0 +1,40 @@
+<html><head>
+  <title>tbd</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head><body>
+  <h1>tbd</h1>
+  yay
+  <canvas id="theview" width="200" height="150"></canvas>
+  <hr>
+  <div id="footer" style="font-size: smaller">
+  <a href="http://github.com/darius/minilight.js">Source code</a> on
+  GitHub.
+  <p><em>Copyright &#169; 2012
+  <a href="http://wry.me/blog/">Darius Bacon</a><br/></em></div>
+
+  <script src="vector3.js"></script>
+
+  <script src="triangle.js"></script>
+  <script src="spatialindex.js"></script>
+  <script src="scene.js"></script>
+
+  <script src="surfacepoint.js"></script>
+  <script src="raytracer.js"></script>
+  <script src="camera.js"></script>
+
+  <script src="image.js"></script>
+
+  <script src="minilight.js"></script>
+
+  <script src="eg.js"></script>
+  <script type="text/javascript">
+
+var wtf = document.getElementById('theview');
+var ctx = wtf.getContext('2d');
+var imgdata = ctx.getImageData(0, 0, wtf.width, wtf.height);
+image.blit(imgdata, 1);
+ctx.putImageData(imgdata, 0, 0);
+
+  </script>
+
+</body></html>
