@@ -6,7 +6,9 @@ var GAMMA_ENCODE = 0.45;
 
 function Image(width, height) {
     var npixels = width * height;
-    var pixels = new Array(npixels * 3);
+    var pixels = [];
+    for (var i = 0; i < 3 * npixels; ++i)
+        pixels.push(0);
 
     function calculateToneMapping(divider) {
         var sum_of_logs = 0;
