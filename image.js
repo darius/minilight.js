@@ -25,9 +25,9 @@ function Image(width, height) {
         for (var i = 0; i < npixels; ++i) {
             var pixel = Vector3(pixels[3*i], pixels[3*i+1], pixels[3*i+2]);
             var y = divider * dot(pixel, RGB_LUMINANCE);
-            sum_of_logs += log10(Math.max(y, 1e-4));
+            sum_of_logs += Math.log(Math.max(y, 1e-4));
         }
-        var log_mean_luminance = Math.pow(10, sum_of_logs / npixels);
+        var log_mean_luminance = Math.exp(sum_of_logs / npixels);
         var a = 1.219 + Math.pow(DISPLAY_LUMINANCE_MAX * 0.25, 0.4);
         var b = 1.219 + Math.pow(log_mean_luminance, 0.4);
         return Math.pow(a / b, 2.5) / DISPLAY_LUMINANCE_MAX;
@@ -71,8 +71,4 @@ function Image(width, height) {
             }
         },
     };
-}
-
-function log10(x) {
-    return Math.log(x) / Math.LN10;
 }
