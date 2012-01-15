@@ -41,7 +41,7 @@ function RayTracer(scene) {
             return ZERO;        // No, it's occluded.
         var emissionIn =
             SurfacePoint(emitter, position).getEmission(surfacePoint.position,
-                                                        neg(direction).
+                                                        neg(direction),
                                                         true);
         return surfacePoint.getReflection(direction,
                                           scale(scene.countEmitters(), emissionIn),
