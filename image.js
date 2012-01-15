@@ -8,7 +8,7 @@ function Image(width, height) {
     var npixels = width * height;
     var pixels = new Array(npixels * 3);
 
-    function calculateToneMapping(pixels, divider) {
+    function calculateToneMapping(divider) {
         var sum_of_logs = 0;
         for (var i = 0; i < npixels; ++i) {
             var pixel = Vector3(pixels[3*i], pixels[3*i+1], pixels[3*i+2]);
@@ -34,7 +34,7 @@ function Image(width, height) {
         },
         save: function(iteration) {
             var divider = 1 / (1 + Math.max(iteration, 0));
-            var tonemapScaling = calculateToneMapping(pixels, divider);
+            var tonemapScaling = calculateToneMapping(divider);
             var out = '';
             out += PPM_ID;
             out += '\n# ' + MINILIGHT_URI + '\n\n';
