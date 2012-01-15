@@ -76,7 +76,7 @@ function Triangle(v0, v1, v2, reflectivity, emissivity) {
 
 // Tests from Clojure port
 
-load('vector3.js')
+// load('vector3.js')
 
 // Triangle in xy-plane, reflect 1/2, emit 1
 var xytriangle = Triangle([0,0,0], [1,0,0], [0,1,0], [1/2,1/2,1/2], [1,1,1])
