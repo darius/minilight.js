@@ -6,7 +6,7 @@ function Scene(skyEmission, groundReflection, triangles) {
         intersect: SpatialIndex(triangles).intersect,
         sampleEmitter: function(random) {
             if (emitters.length === 0) return null;
-            return sampleArray(self.emitters, random);
+            return sampleArray(emitters, random);
         },
         countEmitters: function() {
             return emitters.length;
