@@ -12,7 +12,7 @@ function Image(width, height) {
     for (var i = 0; i < 3 * npixels; ++i)
         pixels.push(0);
 
-    function makeScaler(iteration) {
+    var makeScaler = function(iteration) {
         var divider = 1 / (1 + Math.max(iteration, 0));
         var scale = calculateToneMapping(divider);
         scale *= divider;
@@ -20,9 +20,9 @@ function Image(width, height) {
             var gammaed = Math.pow(Math.max(channel * scale, 0), GAMMA_ENCODE);
             return Math.min(Math.round(gammaed * 255), 255);
         };
-    }
+    };
             
-    function calculateToneMapping(divider) {
+    var calculateToneMapping = function(divider) {
         var sum_of_logs = 0;
         for (var i = 0; i < npixels; ++i) {
             var pixel = Vector3(pixels[3*i], pixels[3*i+1], pixels[3*i+2]);
@@ -33,7 +33,7 @@ function Image(width, height) {
         var a = 1.219 + Math.pow(DISPLAY_LUMINANCE_MAX * 0.25, 0.4);
         var b = 1.219 + Math.pow(log_mean_luminance, 0.4);
         return Math.pow(a / b, 2.5) / DISPLAY_LUMINANCE_MAX;
-    }
+    };
 
     return {
         pixels: pixels,
