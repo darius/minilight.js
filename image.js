@@ -1,3 +1,5 @@
+"use strict";
+
 var PPM_ID = 'P6';
 var MINILIGHT_URI = 'http://www.hxa7241.org/minilight/';
 var DISPLAY_LUMINANCE_MAX = 200;

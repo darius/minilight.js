@@ -3,6 +3,8 @@
 // Traces a path with emitter sampling: A single chain of ray-steps advances
 // from the eye into the scene with one sampling of emitters at each node.
 
+"use strict";
+
 function RayTracer(scene) {
 
     // Return eyeward radiance. lastHit is a triangle or null.

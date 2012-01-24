@@ -1,5 +1,7 @@
 // TODO: octree index
 
+"use strict";
+
 function SpatialIndex(things) {
     return {
         // Find the nearest thing intersecting the ray, if any.

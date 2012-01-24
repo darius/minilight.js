@@ -1,3 +1,5 @@
+"use strict";
+
 // A surface point at a ray-object intersection.
 // All direction parameters are unit vectors away from the surface.
 function SurfacePoint(triangle, position) {

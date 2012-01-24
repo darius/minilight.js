@@ -1,3 +1,4 @@
+"use strict";
 var iterations = 100; //00;
 var image = Image(200, 150);
 var camera = Camera([0, 0.75, -2],

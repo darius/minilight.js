@@ -1,3 +1,5 @@
+"use strict";
+
 function Scene(skyEmission, groundReflection, triangles) {
     skyEmission = clamp(skyEmission, 0, Infinity);
     groundReflection = mul(skyEmission, clamp(groundReflection, 0, 1));

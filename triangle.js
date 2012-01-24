@@ -1,3 +1,5 @@
+"use strict";
+
 var TOLERANCE = 1/1024;
 var EPSILON = 1/1048576;
 

@@ -1,3 +1,5 @@
+"use strict";
+
 function Vector3(x, y, z) {
     if (y === undefined) y = x;
     if (z === undefined) z = y;
