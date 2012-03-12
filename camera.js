@@ -15,6 +15,7 @@ function Camera(viewPosition, viewDirection, viewAngleInDeg) {
     }
 
     return {
+        eyePosition: function() { return viewPosition },
         getFrame: function(scene, image, random) {
             var raytracer = RayTracer(scene);
             var aspect = image.height / image.width;

@@ -3,85 +3,79 @@
 var TOLERANCE = 1/1024;
 var EPSILON = 1/1048576;
 
-// TODO: inherit from a prototype instead of making a JSON object,
-// for efficiency (?)
 
-function Triangle(v0, v1, v2, reflectivity, emissivity) {
-    reflectivity = clamp(reflectivity, 0, 1);
-    emissivity = clamp(emissivity, 0, Infinity);
-    var edge0 = sub(v1, v0);
-    var edge1 = sub(v2, v1);
-    var edge2 = sub(v2, v0);
-    var tangent = normalize(edge0);
-    return {
-        getBounds: function() {
-            // TODO: for efficiency (?) use the Minilight algorithm
-            var bound = [Math.min(v0[0], v1[0], v2[0]),
-                         Math.min(v0[1], v1[1], v2[1]),
-                         Math.min(v0[2], v1[2], v2[2]),
-                         Math.max(v0[0], v1[0], v2[0]),
-                         Math.max(v0[1], v1[1], v2[1]),
-                         Math.max(v0[2], v1[2], v2[2])]
-            for (var j = 0; j < 3; ++j) {
-                bound[j]   -= TOLERANCE * (1 + Math.abs(bound[j]));
-                bound[j+3] += TOLERANCE * (1 + Math.abs(bound[j+3]));
-            }
-            // TODO: cleaner to use a pair of vectors?
-            return bound;
-        },
-        // Return a positive number d such that rayOrigin + d * rayDirection
-        // lies within this triangle, if possible, else null.
-        intersect: function(rayOrigin, rayDirection) {
-            // NB This returns a number or null; the original returns a boolean
-            //  along with an output parameter.
-            var edge1 = sub(v1, v0); // XXX redundant
-            var pvec = cross(rayDirection, edge2);
-            var det = dot(edge1, pvec);
-            if (-EPSILON < det && det < EPSILON)
-                return null;
-            var invDet = 1 / det;
-            var tvec = sub(rayOrigin, v0);
-            var u = dot(tvec, pvec) * invDet;
-            if (u < 0 || 1 < u)
-                return null;
-            var qvec = cross(tvec, edge1);
-            var v = dot(rayDirection, qvec) * invDet;
-            if (v < 0 || 1 < u + v)
-                return null;
-            var hitDistance = dot(edge2, qvec) * invDet;
-            return 0 <= hitDistance ? hitDistance : null;
-        },
-        samplePoint: function(random) {
-            var sqr1 = Math.sqrt(random());
-            var r2 = random();
-            return add(scale(1 - sqr1, edge0),
-                       add(scale((1 - r2) * sqr1, edge2),
-                           v0));
-        },
-        getNormal: function() {
-            return normalize(cross(tangent, edge1));
-        },
-        getTangent: function()  {
-            return tangent;
-        },
-        getArea: function() {
-            return 0.5 * norm(cross(edge0, edge1));
-        },
-        getReflectivity: function() {
-            return reflectivity;
-        },
-        getEmissivity: function() {
-            return emissivity;
-        },
-    };
-}
+var Triangle = function(v0, v1, v2, reflectivity, emissivity) {
+    this.vertexs = [v0, v1, v2];
+    this.reflectivity = clamp(reflectivity, 0, 1);
+    this.emissivity = clamp(emissivity, 0, Infinity);
+    this.edge0 = sub(v1, v0);
+    this.edge1 = sub(v2, v1);
+    this.edge2 = sub(v2, v0);
+};
+
+
+Triangle.prototype.bound = function() {
+    // calculate min and max across all vertexs
+    var v = this.vertexs;
+    var lower = clamp( clamp( v[0], -Infinity, v[1] ), -Infinity, v[2] );
+    var upper = clamp( clamp( v[0], v[1],  Infinity ), v[2],  Infinity );
+
+    // enlarge with some padding (for double precision FP)
+    return { lower: sub(lower, Vector3(TOLERANCE)),
+             upper: add(upper, Vector3(TOLERANCE)) };
+};
+
+// Return a positive number d such that rayOrigin + d * rayDirection
+// lies within this triangle, if possible, else null.
+Triangle.prototype.intersection = function(rayOrigin, rayDirection) {
+    // NB This returns a number or null; the original returns a boolean
+    //  along with an output parameter.
+    var pvec = cross(rayDirection, this.edge2);
+    var det = dot(this.edge0, pvec);
+    if (-EPSILON < det && det < EPSILON)
+        return null;
+    var invDet = 1 / det;
+    var tvec = sub(rayOrigin, this.vertexs[0]);
+    var u = dot(tvec, pvec) * invDet;
+    if (u < 0 || 1 < u)
+        return null;
+    var qvec = cross(tvec, this.edge0);
+    var v = dot(rayDirection, qvec) * invDet;
+    if (v < 0 || 1 < u + v)
+        return null;
+    var hitDistance = dot(this.edge2, qvec) * invDet;
+    return 0 <= hitDistance ? hitDistance : null;
+};
+
+Triangle.prototype.samplePoint = function(random) {
+    var sqr1 = Math.sqrt(random());
+    var r2 = random();
+    return add(scale(1 - sqr1, this.edge0),
+               add(scale((1 - r2) * sqr1, this.edge2),
+                   this.vertexs[0]));
+};
+
+Triangle.prototype.getNormal = function() {
+    return normalize(cross(this.edge0, this.edge1));
+};
+
+Triangle.prototype.getTangent = function() {
+    return normalize(this.edge0);
+};
+
+Triangle.prototype.getArea = function() {
+    return 0.5 * norm(cross(this.edge0, this.edge1));
+};
+
+
+
 
 // Tests from Clojure port
 
 // load('vector3.js')
 
 // Triangle in xy-plane, reflect 1/2, emit 1
-var xytriangle = Triangle([0,0,0], [1,0,0], [0,1,0], [1/2,1/2,1/2], [1,1,1])
+//var xytriangle = Triangle([0,0,0], [1,0,0], [0,1,0], [1/2,1/2,1/2], [1,1,1])
 
 // Same in yz plane
 /// var y2ztriangle = Triangle([0,0,0], [0,2,0], [0,0,1], [1/2,1/2,1/2], [1,1,1])

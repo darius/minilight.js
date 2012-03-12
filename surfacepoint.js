@@ -21,7 +21,7 @@ function SurfacePoint(triangle, position) {
             var distance2 = dot(ray, ray);
             var solidAngle =
                 isSolidAngle ? cosArea / Math.max(distance2, 1e-6) : 1;
-            return scale(solidAngle, triangle.getEmissivity());
+            return scale(solidAngle, triangle.emissivity);
         },
 
         // Return the reflected radiance resulting from inRadiance
@@ -36,13 +36,13 @@ function SurfacePoint(triangle, position) {
             // Ideal diffuse BRDF:
             // radiance scaled by reflectivity, cosine, and 1/pi
             return mul(scale(Math.abs(inDot) / Math.PI, inRadiance),
-                       triangle.getReflectivity());
+                       triangle.reflectivity);
         },
 
         // Return the next direction and color vectors of a ray from
         // -inDirection bouncing off the surface, or null. (Monte carlo.)
         getNextDirection: function(random, inDirection) {
-            var reflectivityMean = dot(triangle.getReflectivity(), ONE_THIRD);
+            var reflectivityMean = dot(triangle.reflectivity, ONE_THIRD);
 
             // Russian roulette for reflectance magnitude
             if (reflectivityMean <= random())
@@ -67,7 +67,7 @@ function SurfacePoint(triangle, position) {
             var outDirection = x * tangent + y * cross(normal, tangent) + z * normal;
             if (isZero(outDirection))
                 return null;
-            var color = scale(1 / reflectivityMean, triangle.getReflectivity());
+            var color = scale(1 / reflectivityMean, triangle.reflectivity);
             return [outDirection, color];
         },
     };

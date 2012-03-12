@@ -1,6 +1,7 @@
 "use strict";
 
 function Vector3(x, y, z) {
+    if (x === undefined) x = 0;
     if (y === undefined) y = x;
     if (z === undefined) z = y;
     return [x, y, z];
@@ -60,9 +61,11 @@ function cross(u, v) {
 }
 
 function clamp(v, lo, hi) {
-    return [clip(v[0], lo, hi),
-            clip(v[1], lo, hi),
-            clip(v[2], lo, hi)];
+    lo = (typeof lo === "number") ? Vector3(lo) : lo;
+    hi = (typeof hi === "number") ? Vector3(hi) : hi;
+    return [clip(v[0], lo[0], hi[0]),
+            clip(v[1], lo[1], hi[1]),
+            clip(v[2], lo[2], hi[2])];
 }
 
 function clip(x, lo, hi) {

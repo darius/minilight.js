@@ -1,11 +1,14 @@
 "use strict";
 
-function Scene(skyEmission, groundReflection, triangles) {
+function Scene(skyEmission, groundReflection, triangles, eyePosition) {
     skyEmission = clamp(skyEmission, 0, Infinity);
     groundReflection = mul(skyEmission, clamp(groundReflection, 0, 1));
     var emitters = filter(triangles, glows);
+    var index = new SpatialIndex(eyePosition, triangles);
     return {
-        intersect: SpatialIndex(triangles).intersect,
+        intersect: function(rayOrigin, rayDirection, lastHit) {
+            return index.intersection(rayOrigin, rayDirection, lastHit);
+        },
         sampleEmitter: function(random) {
             if (emitters.length === 0) return null;
             return sampleArray(emitters, random);
@@ -20,7 +23,7 @@ function Scene(skyEmission, groundReflection, triangles) {
 }
 
 function glows(triangle) {
-    return !isZero(triangle.getEmissivity()) && 0 < triangle.getArea();
+    return !isZero(triangle.emissivity) && 0 < triangle.getArea();
 }
 
 function filter(xs, ok) {
